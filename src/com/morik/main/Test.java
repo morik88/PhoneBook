@@ -9,13 +9,13 @@ public class Test {
         int[] id = new int[20];
         String[] lName = new String[20];
 
-        fName[0] = "Sergey";
-        fName[1] = "Sergey";
-        fName[2] = "Alex";
+        fName[0] = "Sergey2";
+        fName[1] = "Sergey2";
+        fName[2] = "Alex2";
 
-        lName[0] = "Morkotun";
-        lName[1] = "Repch";
-        lName[2] = "Bugan";
+        lName[0] = "Morkotun2";
+        lName[1] = "Repch2";
+        lName[2] = "Bugan2";
 
         id[0] = 1;
         id[1] = 2;
