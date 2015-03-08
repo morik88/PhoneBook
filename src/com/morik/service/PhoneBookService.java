@@ -23,30 +23,40 @@ public class PhoneBookService {
     }
 
     public PhoneBookService() {
-        personDAO = new PersonDAO();
-        contactDAO = new ContactDAO();
+        personDAO = new PersonDAO("person");
+        contactDAO = new ContactDAO("contact");
     }
 
-    public List<Person> getAllPerson(){
+    public List<Person> getAllPerson() {
         return personDAO.loadAll();
     }
 
-    public Person getPerson(long id){
+    public Person getPerson(long id) {
         return personDAO.load(id);
     }
 
-    public void deletePerson (long id){
+    public void savePerson(Person person) {
+        personDAO.save(person);
+    }
+
+    public void savePersonList(List<Person> personList) {
+        for (Person person : personList) {
+            System.out.printf("BIZON savePersonList person: " + personList);
+            savePerson(person);
+        }
+    }
+
+    public void deletePerson(long id) {
         personDAO.delete(id);
     }
 
-    public void updatePerson (Person person){
-        personDAO.update(person);
-    }
-
-    public void insertPerson (Person person){
-        personDAO.insert(person);
-    }
-
+//    public void updatePerson(Person person) {
+//        personDAO.update(person);
+//    }
+//
+//    public void insertPerson(Person person) {
+//        personDAO.insert(person);
+//    }
 
 
     public List<Contact> getAllContact() {
@@ -61,19 +71,23 @@ public class PhoneBookService {
         return contactDAO.loadOwnContacts(id);
     }
 
-    public Contact getContact(long id){
+    public Contact getContact(long id) {
         return contactDAO.load(id);
     }
 
-    public void deleteContact(long id){
+    public void deleteContact(long id) {
         contactDAO.delete(id);
     }
 
-    public void updateContact(Contact contact){
-        contactDAO.update(contact);
+    public void saveContact(Contact contact) {
+        contactDAO.save(contact);
     }
 
-    public void insertContact(Contact contact){
-        contactDAO.insert(contact);
-    }
+//    public void updateContact(Contact contact) {
+//        contactDAO.update(contact);
+//    }
+//
+//    public void insertContact(Contact contact) {
+//        contactDAO.insert(contact);
+//    }
 }

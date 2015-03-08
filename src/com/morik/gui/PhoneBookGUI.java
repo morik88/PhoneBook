@@ -12,11 +12,9 @@ import java.awt.event.*;
 public class PhoneBookGUI extends JFrame {
     public PhoneBookGUI() {
         final PhoneBookService phoneBookService = new PhoneBookService();
-        final ShowAreaGUI showAreaGUI = new ShowAreaGUI();
+        final PersonsForm personsForm = new PersonsForm();
+        final ContactForm contactForm = new ContactForm();
         final AddPersonGUI addPersonGUI = new AddPersonGUI();
-
-
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Phone Book");
         setSize(410, 500);
@@ -55,16 +53,16 @@ public class PhoneBookGUI extends JFrame {
         btnGetAllPerson.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showAreaGUI.setVisible(true);
-                showAreaGUI.textArea.setText(String.valueOf(phoneBookService.getAllPerson()));
+                personsForm.setVisible(true);
+                personsForm.fillData(phoneBookService.getAllPerson());
             }
         });
 
         btnGetAllContact.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showAreaGUI.setVisible(true);
-                showAreaGUI.textArea.setText(String.valueOf(phoneBookService.getAllContact()));
+                contactForm.setVisible(true);
+                contactForm.fillData(phoneBookService.getAllContact());
             }
         });
 

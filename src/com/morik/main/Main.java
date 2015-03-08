@@ -19,9 +19,9 @@ public class Main {
 //        System.out.println(phoneBookService.getPerson(1L));
 
         Person person = new Person("Jesica","Alba");
-        person.setId(8);
+//        person.setId(8);
 
-//        phoneBookService.insertPerson(person);
+        phoneBookService.savePerson(person);
 //        System.out.println(phoneBookService.getAllPerson());
 
 //        phoneBookService.updatePerson(person);

@@ -2,6 +2,7 @@ package com.morik.db.dao;
 
 import com.morik.db.bean.Person;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,16 +11,17 @@ import java.util.List;
 /**
  * Created by Morik on 01.03.2015.
  */
-public class PersonDAO extends AbstractDAO {
-    public PersonDAO() {
-        super();
+public class PersonDAO extends AbstractDAO<Person> {
+    public PersonDAO(String tableName) {
+        super(tableName);
 
+        tableName = "person";
         try {
-            loadAll = connection.prepareStatement("select * from person");
-            load = connection.prepareStatement("SELECT * FROM person WHERE id=?");
-            delete = connection.prepareStatement("DELETE FROM person WHERE id=?");
-            insert = connection.prepareStatement("INSERT INTO person (f_name,l_name) VALUES (?,?)");
-            update = connection.prepareStatement("UPDATE person SET f_name=? , l_name=? WHERE id=?");
+            loadAll = connection.prepareStatement("select * from " + tableName);
+            load = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE id=?");
+            delete = connection.prepareStatement("DELETE FROM " + tableName + " WHERE id = ? ");
+            insert = connection.prepareStatement("INSERT INTO " + tableName + " (f_name,l_name) VALUES (?,?)");
+            update = connection.prepareStatement("UPDATE " + tableName + " SET f_name=? , l_name=? WHERE id=?");
         } catch (SQLException ex) {
             System.out.println("PersonDAO init statement error: " + ex);
         }
@@ -38,13 +40,26 @@ public class PersonDAO extends AbstractDAO {
         return person;
     }
 
+    @Override
+    protected void prepareInsert(PreparedStatement insert, Person object) throws SQLException {
+        insert.setString(1, object.getfName());
+        insert.setString(2, object.getlName());
+    }
+
+    @Override
+    protected void prepareUpdate(PreparedStatement update, Person object) throws SQLException {
+        update.setString(1, object.getfName());
+        update.setString(2, object.getlName());
+        update.setLong(3, object.getId());
+    }
+
     public Person load(long id) {
         Person person = null;
         ResultSet resultSet = null;
         try {
             load.setLong(1, id);
             resultSet = load.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 person = read(resultSet);
             }
             resultSet.close();
@@ -75,27 +90,6 @@ public class PersonDAO extends AbstractDAO {
             delete.execute();
         } catch (SQLException ex) {
             System.out.println("PersonDAO delete error: " + ex);
-        }
-    }
-
-    public void insert(Person person) {
-        try {
-            insert.setString(1, person.getfName());
-            insert.setString(2, person.getlName());
-            insert.execute();
-        } catch (SQLException ex) {
-            System.out.println("PersonDAO insert error: " + ex);
-        }
-    }
-
-    public void update(Person person) {
-        try {
-            update.setString(1, person.getfName());
-            update.setString(2, person.getlName());
-            update.setLong(3, person.getId());
-            update.execute();
-        } catch (SQLException ex) {
-            System.out.println("PersonDAO update error: " + ex);
         }
     }
 }

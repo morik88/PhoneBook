@@ -3,8 +3,7 @@ package com.morik.db.bean;
 /**
  * Created by Morik on 01.03.2015.
  */
-public class Contact {
-    private long id;
+public class Contact extends Entity {
     private long holderId;
     private long ownerId;
     private String number;
@@ -16,14 +15,6 @@ public class Contact {
         this.holderId = holderId;
         this.ownerId = ownerId;
         this.number = number;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public long getHolderId() {

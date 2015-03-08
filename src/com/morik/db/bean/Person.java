@@ -3,8 +3,7 @@ package com.morik.db.bean;
 /**
  * Created by Morik on 01.03.2015.
  */
-public class Person {
-    private long id;
+public class Person extends Entity {
     private String fName;
     private String lName;
 
@@ -14,14 +13,6 @@ public class Person {
     public Person(String fName, String lName) {
         this.fName = fName;
         this.lName = lName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getfName() {

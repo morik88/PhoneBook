@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by Morik on 01.03.2015.
  */
-public class ContactDAO extends AbstractDAO{
+public class ContactDAO extends AbstractDAO<Contact> {
     protected PreparedStatement loadHolderContacts;
     protected PreparedStatement loadOwnContacts;
 
 
-    public ContactDAO() {
-        super();
+    public ContactDAO(String tableName) {
+        super(tableName);
 
         try {
             loadAll = connection.prepareStatement("select * from contacts");
@@ -44,6 +44,21 @@ public class ContactDAO extends AbstractDAO{
             System.out.println("ContactDAO read result set error: " + ex);
         }
         return contact;
+    }
+
+    @Override
+    protected void prepareInsert(PreparedStatement insert, Contact object) throws SQLException {
+        insert.setLong(1, object.getHolderId());
+        insert.setLong(2, object.getOwnerId());
+        insert.setString(3, object.getNumber());
+    }
+
+    @Override
+    protected void prepareUpdate(PreparedStatement update, Contact object) throws SQLException {
+        update.setLong(1, object.getHolderId());
+        update.setLong(2, object.getOwnerId());
+        update.setString(3, object.getNumber());
+        update.setLong(4, object.getId());
     }
 
     public List<Contact> loadAll() {
@@ -100,7 +115,7 @@ public class ContactDAO extends AbstractDAO{
         try {
             load.setLong(1, id);
             resultSet = load.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 contact = read(resultSet);
             }
             resultSet.close();
@@ -116,29 +131,6 @@ public class ContactDAO extends AbstractDAO{
             delete.execute();
         } catch (SQLException ex) {
             System.out.println("ContactDAO delete error: " + ex);
-        }
-    }
-
-    public void insert(Contact contact) {
-        try {
-            insert.setLong(1, contact.getHolderId());
-            insert.setLong(2, contact.getOwnerId());
-            insert.setString(3, contact.getNumber());
-            insert.execute();
-        } catch (SQLException ex) {
-            System.out.println("PersonDAO insert error: " + ex);
-        }
-    }
-
-    public void update(Contact contact) {
-        try {
-            update.setLong(1, contact.getHolderId());
-            update.setLong(2, contact.getOwnerId());
-            update.setString(3, contact.getNumber());
-            update.setLong(4, contact.getId());
-            update.execute();
-        } catch (SQLException ex) {
-            System.out.println("PersonDAO update error: " + ex);
         }
     }
 }
