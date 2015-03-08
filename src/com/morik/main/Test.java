@@ -14,7 +14,7 @@ public class Test {
         fName[2] = "Alex2";
 
         lName[0] = "Morkotun2";
-        lName[1] = "Repch2";
+        lName[1] = "Repch3";
         lName[2] = "Bugan2";
 
         id[0] = 1;
